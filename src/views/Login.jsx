@@ -1,15 +1,16 @@
 
 import { useState } from 'react';
-import loginUser from '../firebase/auth/loginUser';
-import '../styles/App.css';
+import { defaultUserLogin } from '../firebase/auth/loginUser';
+import '../styles/App.scss';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = (e) => {
+    console.log(e)
     e.preventDefault();
-    loginUser(email, password);
+    defaultUserLogin(email, password);
   }
 
   return (

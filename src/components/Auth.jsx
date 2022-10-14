@@ -1,8 +1,7 @@
 
 import { useNavigate } from 'react-router-dom'
-import Login from '../views/Login'
-import Register from '../views/Register'
-import RoutePaths from '../routePaths'
+import { googleUserLogin } from '../firebase/auth/loginUser'
+import { RouteMap } from  '../constants/routes';
 
 const Auth = () => {
 
@@ -14,8 +13,10 @@ const Auth = () => {
       <Greeting />
   
       <div className="auth-buttons">
-        <button onClick={() => navigate(RoutePaths.LOGIN)}>Login</button>
-        <button onClick={() => navigate(RoutePaths.REGISTER)}>Register</button>
+        <button onClick={() => navigate(RouteMap.Login.path)}>Login</button>
+        <button onClick={() => navigate(RouteMap.Register.path)}>Register</button>
+        <br></br>
+        <button onClick={() => googleUserLogin()}>Sign in with Google</button>
       </div>
     </div>
   )

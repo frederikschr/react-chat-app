@@ -1,0 +1,31 @@
+.chat {
+  width: 80%;
+  margin: 3em auto;
+
+  .message-area {
+
+    margin: 2em auto;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    height: 60vh;
+    overflow-y: scroll;
+
+    .message {
+
+      width: 50%;
+      text-align: left;
+
+      .message-self {
+        justify-self: center;
+        background-color: green;
+      }
+
+      .message-foreign {
+        background-color: red;
+      }
+    }
+
+  }
+
+}

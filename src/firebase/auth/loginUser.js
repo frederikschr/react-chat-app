@@ -1,16 +1,24 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth } from '../app';
 
-const login = async (email, password) => {
+const provider = new GoogleAuthProvider();
+
+const googleUserLogin = async () => {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      console.log(result.user);
+    })
+}
+
+const defaultUserLogin = async (email, password) => {
   signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Flash sign in message
     console.log(auth.currentUser);
   })
   .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-  });
+    console.log(error)
+   });  
 }
 
-export default login;
+export { googleUserLogin, defaultUserLogin};

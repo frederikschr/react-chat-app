@@ -12,7 +12,11 @@ const Register = () => {
 
   const handleRegistration = (e) => {
     e.preventDefault();
-    registerUser(username, password, email)
+    if (password === passwordConfirm) {
+      registerUser(username, password, email);
+    } else {
+      console.log('Passwords do not match');
+    }
     
   }
 
@@ -28,7 +32,6 @@ const Register = () => {
         <div className="form-group">
           <label>Email</label>
           <input value={email} onChange={e => setEmail(e.target.value)} type="email" className="form-control" placeholder="Enter email"/>
-
         </div>
 
         <div className="form-group">

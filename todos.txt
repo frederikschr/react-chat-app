@@ -1,0 +1,4 @@
+1. Implement cloud functions for checking if email already exists
+
+
+

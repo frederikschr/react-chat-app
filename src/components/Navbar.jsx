@@ -1,24 +1,34 @@
 import { Outlet, Link } from "react-router-dom";
-import RoutePaths from "../routePaths";
+import  { RouteMap } from "../constants/routes";
 import logoutUser from "../firebase/auth/logoutUser";
-import "../styles/Navbar.css"
+import "../styles/Navbar.scss"
+import Sidebar from './Sidebar'
+import { useContext } from 'react';
+import { UserAuthContext } from "../firebase/app";
 
 const Navbar = () => {
+
+  const user = useContext(UserAuthContext);
 
   return (
     <div className="navbar">
       <nav>
         <ul>
-          {}
           <li>
-            <Link to="/">Home</Link>
+            <Link className="nav-link" to="/">Home</Link>
           </li>
           <li>
-            <Link to={RoutePaths.ABOUT}>About</Link>
+            <Link className="nav-link" to={RouteMap.About.path}>About</Link>
           </li>
+          {user !== null && 
+            <li>
+              <button onClick={() => logoutUser()}>Logout</button>
+            </li>
+          }
           <li>
-            <button onClick={() => logoutUser()}>Logout</button>
+            <Sidebar />
           </li>
+
         </ul>
       </nav>
       <Outlet />

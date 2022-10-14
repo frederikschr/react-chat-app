@@ -9,7 +9,7 @@ const Home = () => {
 
   return (
     <div className="home">
-      {user ? <Chat /> : <Auth />}
+      {user !== null ? <Chat /> : <Auth />}
     </div>
   )
 }

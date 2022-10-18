@@ -1,16 +1,11 @@
-import '../styles/Chat.scss'
+import '../styles/Chat.scss';
 import InputBar from './InputBar';
 import MessageArea from './MessageArea';
-import { fetchMessagesRealtime } from '../firebase/db/messages';
-import { useEffect, useState } from 'react';
+import { useRealtimeMessages } from '../firebase/db/messages';
 
 const Chat = () => {
 
-  const [messages, setMessages] = useState([]);
-
-  useEffect(() => {
-    fetchMessagesRealtime((fetchedMessages) => setMessages(fetchedMessages));
-  }, [])
+  const messages = useRealtimeMessages();
 
   return (
     <div className="chat">

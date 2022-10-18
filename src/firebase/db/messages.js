@@ -1,5 +1,6 @@
 import { collection, addDoc, onSnapshot, query, orderBy } from 'firebase/firestore'; 
-import { db, firebase } from '../app';
+import { db } from '../app';
+import { useState, useEffect } from 'react';
 
 const createMessage = async (content, sender, docID) => {    
   await addDoc(collection(db, "messages"), {
@@ -11,17 +12,23 @@ const createMessage = async (content, sender, docID) => {
   })
 }
 
-const fetchMessagesRealtime = async (cb) => {
-  const q = query(collection(db, "messages"), orderBy("id"))
-  onSnapshot(q, (querySnapshot) => {
-    const messages = [];
-    querySnapshot.forEach((doc) => {
-      messages.push(doc.data());
-    })
-    cb(messages);
-  })
+const useRealtimeMessages = () => {
 
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    const q = query(collection(db, "messages"), orderBy("id"))
+    onSnapshot(q, (querySnapshot) => {
+      const messages = [];
+      querySnapshot.forEach((doc) => {
+        messages.push(doc.data());
+      })
+      setMessages(messages);
+    })
+  }, [])
+  
+  return messages;
 }
 
-export { createMessage, fetchMessagesRealtime };
+export { createMessage, useRealtimeMessages };
 

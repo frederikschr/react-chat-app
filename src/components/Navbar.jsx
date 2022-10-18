@@ -1,36 +1,39 @@
 import { Outlet, Link } from "react-router-dom";
-import  { RouteMap } from "../constants/routes";
+import  { RouteMap, AuthorizedStatus } from "../constants/routes";
 import logoutUser from "../firebase/auth/logoutUser";
 import "../styles/Navbar.scss"
 import Sidebar from './Sidebar'
 import { useContext } from 'react';
 import { UserAuthContext } from "../firebase/app";
+import useWindowSize from "../custom_hooks/useWindowSize";
 
 const Navbar = () => {
 
   const user = useContext(UserAuthContext);
+  const userAuthStatus = user !== null ? AuthorizedStatus.AUTHORIZED : AuthorizedStatus.UNAUTHORIZED;
+  const windowSize = useWindowSize();
 
   return (
     <div className="navbar">
-      <nav>
-        <ul>
-          <li>
-            <Link className="nav-link" to="/">Home</Link>
-          </li>
-          <li>
-            <Link className="nav-link" to={RouteMap.About.path}>About</Link>
-          </li>
-          {user !== null && 
-            <li>
-              <button onClick={() => logoutUser()}>Logout</button>
-            </li>
+      { windowSize.width > 700 ? 
+        <>
+          <ul>
+            {
+            Object.entries(RouteMap).map(([name, route]) => {
+              return (userAuthStatus == route.requiredAuth || route.requiredAuth === AuthorizedStatus.IRRELEVANT) 
+                && <Link className="link" key={name} to={route.path}>{name}</Link>
+            })
+            }
+          </ul>
+          { userAuthStatus === AuthorizedStatus.AUTHORIZED && 
+            <button className="logoutbtn" onClick={() => logoutUser()}>Logout</button>
           }
-          <li>
-            <Sidebar />
-          </li>
-
-        </ul>
-      </nav>
+        </>
+        : 
+        <>
+          <Sidebar userAuthStatus={userAuthStatus} />
+        </>
+      }
       <Outlet />
     </div>
   )

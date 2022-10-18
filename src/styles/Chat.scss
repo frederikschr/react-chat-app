@@ -1,6 +1,13 @@
+@mixin message {
+  width: 50%;
+  word-wrap: break-word;
+  text-align: left;
+
+}
+
 .chat {
   width: 80%;
-  margin: 3em auto;
+  margin: 2em auto;
 
   .message-area {
 
@@ -10,20 +17,16 @@
     flex-direction: column;
     height: 60vh;
     overflow-y: scroll;
+    overflow-x: hidden;
 
-    .message {
+    .message-self {
+      align-self: flex-end;
+      @include message()
+    }
 
-      width: 50%;
-      text-align: left;
-
-      .message-self {
-        justify-self: center;
-        background-color: green;
-      }
-
-      .message-foreign {
-        background-color: red;
-      }
+    .message-foreign {
+      align-self: flex-start;
+      @include message();
     }
 
   }

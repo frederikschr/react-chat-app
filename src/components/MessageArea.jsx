@@ -1,7 +1,6 @@
 import Message from "./Message";
 
 const MessageArea = ({messages}) => {
-
   return (
     <div className="message-area">
 

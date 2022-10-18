@@ -23,7 +23,6 @@ function App() {
             <Route path='/' index element={<Home />} />
             {
               Object.values(RouteMap).map((route) => {
-                console.log(route)
                 return <Route key={route} path={route.path} element={route.component} />
               })
             }
